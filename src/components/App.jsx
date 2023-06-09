@@ -1,15 +1,17 @@
-import About from './about';
+// import About from './about';
+import React from 'react'
+import { Routes,Route } from 'react-router-dom';
 import Home from './home'
 import NavBar from './nav';
 import Login from './login';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes,Route } from 'react-router-dom';
 import NotFound from './notfound';
 import Product from './product';
 import FeaturedProduct from './featured';
 import NewProduct from './new';
 import Users from './users';
 import UserDetails from './details';
+const LazyAbout = React.lazy(()=>import('./about'));
 
 function App(){
     return(
@@ -17,7 +19,9 @@ function App(){
             <NavBar/>
             <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='/about' element={<About/>}/>
+            <Route path='/about' element={<React.Suspense fallback={'loading ...'}>
+                <LazyAbout/>
+                </React.Suspense>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/product' element={<Product/>}>
                 <Route index element={<FeaturedProduct/>}/>
